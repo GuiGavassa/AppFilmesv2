@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Image, ImageBackground } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { MoviesManager } from '../services/moviesManager';
 
@@ -103,32 +103,70 @@ export default function ChooseMoviesScreen() {
 
       <Animated.View style={[styles.cardContainer, { opacity: fadeAnim }]}>
         <View style={styles.card}>
-          <View style={styles.cardContent}>
-            <Ionicons name="film" size={80} color="#e50914" />
-            <Text style={styles.movieTitle}>{currentMovie.title}</Text>
-            
-            <View style={styles.movieDetails}>
-              {currentMovie.year && (
-                <View style={styles.detailItem}>
-                  <Ionicons name="calendar-outline" size={16} color="#999" />
-                  <Text style={styles.detailText}>{currentMovie.year}</Text>
+          {currentMovie.posterUrl ? (
+            <ImageBackground
+              source={{ uri: currentMovie.posterUrl }}
+              style={styles.posterBackground}
+              imageStyle={styles.posterImage}
+            >
+              <View style={styles.gradientOverlay}>
+                <View style={styles.cardContentWithPoster}>
+                  <View style={styles.movieInfo}>
+                    <Text style={styles.movieTitleLarge}>{currentMovie.title}</Text>
+                    
+                    <View style={styles.movieDetails}>
+                      {currentMovie.year && (
+                        <View style={styles.detailItem}>
+                          <Ionicons name="calendar-outline" size={18} color="#fff" />
+                          <Text style={styles.detailTextLight}>{currentMovie.year}</Text>
+                        </View>
+                      )}
+                      
+                      {currentMovie.genre && (
+                        <View style={styles.detailItem}>
+                          <MaterialIcons name="category" size={18} color="#fff" />
+                          <Text style={styles.detailTextLight}>{currentMovie.genre}</Text>
+                        </View>
+                      )}
+                    </View>
+
+                    {currentMovie.description && (
+                      <Text style={styles.movieDescriptionLight} numberOfLines={5}>
+                        {currentMovie.description}
+                      </Text>
+                    )}
+                  </View>
                 </View>
-              )}
+              </View>
+            </ImageBackground>
+          ) : (
+            <View style={styles.cardContent}>
+              <Ionicons name="film" size={80} color="#e50914" />
+              <Text style={styles.movieTitle}>{currentMovie.title}</Text>
               
-              {currentMovie.genre && (
-                <View style={styles.detailItem}>
-                  <MaterialIcons name="category" size={16} color="#999" />
-                  <Text style={styles.detailText}>{currentMovie.genre}</Text>
-                </View>
+              <View style={styles.movieDetails}>
+                {currentMovie.year && (
+                  <View style={styles.detailItem}>
+                    <Ionicons name="calendar-outline" size={16} color="#999" />
+                    <Text style={styles.detailText}>{currentMovie.year}</Text>
+                  </View>
+                )}
+                
+                {currentMovie.genre && (
+                  <View style={styles.detailItem}>
+                    <MaterialIcons name="category" size={16} color="#999" />
+                    <Text style={styles.detailText}>{currentMovie.genre}</Text>
+                  </View>
+                )}
+              </View>
+
+              {currentMovie.description && (
+                <Text style={styles.movieDescription} numberOfLines={4}>
+                  {currentMovie.description}
+                </Text>
               )}
             </View>
-
-            {currentMovie.description && (
-              <Text style={styles.movieDescription} numberOfLines={4}>
-                {currentMovie.description}
-              </Text>
-            )}
-          </View>
+          )}
         </View>
       </Animated.View>
 
@@ -195,17 +233,64 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '100%',
-    height: 400,
+    height: 500,
     backgroundColor: '#1a1a1a',
     borderRadius: 20,
-    padding: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    overflow: 'hidden',
     borderWidth: 2,
     borderColor: '#333',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+  },
+  posterBackground: {
+    width: '100%',
+    height: '100%',
+  },
+  posterImage: {
+    borderRadius: 18,
+  },
+  gradientOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  cardContentWithPoster: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    padding: 25,
+  },
+  movieInfo: {
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    padding: 20,
+    borderRadius: 15,
+    backdropFilter: 'blur(10px)',
+  },
+  movieTitleLarge: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 12,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10,
+  },
+  detailTextLight: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  movieDescriptionLight: {
+    fontSize: 15,
+    color: '#e0e0e0',
+    lineHeight: 22,
+    marginTop: 12,
   },
   cardContent: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 20,
   },
   movieTitle: {

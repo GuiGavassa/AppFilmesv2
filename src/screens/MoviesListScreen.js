@@ -47,6 +47,8 @@ export default function MoviesListScreen() {
   const [movieDescription, setMovieDescription] = useState('');
   const [movieGenre, setMovieGenre] = useState('');
   const [moviePlatforms, setMoviePlatforms] = useState([]);
+  const [moviePosterUrl, setMoviePosterUrl] = useState(null);
+  const [movieBackdropUrl, setMovieBackdropUrl] = useState(null);
 
   // Busca de filmes TMDb
   const [searchResults, setSearchResults] = useState([]);
@@ -109,6 +111,8 @@ export default function MoviesListScreen() {
     setMovieTitle(movie.title);
     setMovieYear(movie.year);
     setMovieDescription(movie.description);
+    setMoviePosterUrl(movie.posterUrl);
+    setMovieBackdropUrl(movie.backdropUrl);
     
     // Tentar mapear o primeiro gênero
     if (movie.genreIds && movie.genreIds.length > 0) {
@@ -133,7 +137,9 @@ export default function MoviesListScreen() {
       year: movieYear,
       description: movieDescription,
       genre: movieGenre,
-      platforms: moviePlatforms
+      platforms: moviePlatforms,
+      posterUrl: moviePosterUrl,
+      backdropUrl: movieBackdropUrl,
     };
 
     if (editingMovie) {
@@ -161,6 +167,8 @@ export default function MoviesListScreen() {
     setMovieDescription('');
     setMovieGenre('');
     setMoviePlatforms([]);
+    setMoviePosterUrl(null);
+    setMovieBackdropUrl(null);
     setModalVisible(false);
     setEditingMovie(null);
     setSearchResults([]);
@@ -174,6 +182,8 @@ export default function MoviesListScreen() {
     setMovieDescription(movie.description || '');
     setMovieGenre(movie.genre || '');
     setMoviePlatforms(movie.platforms || []);
+    setMoviePosterUrl(movie.posterUrl || null);
+    setMovieBackdropUrl(movie.backdropUrl || null);
     setModalVisible(true);
     setExpandedMovieId(null);
   };
@@ -243,9 +253,19 @@ export default function MoviesListScreen() {
           style={styles.movieHeader}
           onPress={() => setExpandedMovieId(isExpanded ? null : item.id)}
         >
+          {item.posterUrl ? (
+            <Image 
+              source={{ uri: item.posterUrl }} 
+              style={styles.moviePoster}
+            />
+          ) : (
+            <View style={styles.moviePosterPlaceholder}>
+              <Ionicons name="film" size={32} color="#666" />
+            </View>
+          )}
+          
           <View style={styles.movieMainInfo}>
             <View style={styles.titleRow}>
-              <Ionicons name="film" size={20} color="#e50914" />
               <Text style={styles.movieTitle}>{item.title}</Text>
             </View>
             
@@ -385,6 +405,21 @@ export default function MoviesListScreen() {
             </View>
 
             <ScrollView style={styles.modalForm} showsVerticalScrollIndicator={false}>
+              {/* Preview do Poster */}
+              {moviePosterUrl && (
+                <View style={styles.posterPreviewContainer}>
+                  <Image 
+                    source={{ uri: moviePosterUrl }} 
+                    style={styles.posterPreview}
+                    resizeMode="cover"
+                  />
+                  <View style={styles.posterPreviewOverlay}>
+                    <Ionicons name="checkmark-circle" size={40} color="#00ff00" />
+                    <Text style={styles.posterPreviewText}>Filme selecionado do TMDb</Text>
+                  </View>
+                </View>
+              )}
+              
               {/* Título com busca */}
               <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>
@@ -635,6 +670,23 @@ const styles = StyleSheet.create({
   movieHeader: {
     flexDirection: 'row',
     padding: 15,
+    gap: 12,
+  },
+  moviePoster: {
+    width: 70,
+    height: 105,
+    borderRadius: 8,
+    backgroundColor: '#0a0a0a',
+  },
+  moviePosterPlaceholder: {
+    width: 70,
+    height: 105,
+    borderRadius: 8,
+    backgroundColor: '#0a0a0a',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#333',
   },
   movieMainInfo: {
     flex: 1,
@@ -801,6 +853,35 @@ const styles = StyleSheet.create({
   modalForm: {
     paddingHorizontal: 25,
     maxHeight: 500,
+  },
+  posterPreviewContainer: {
+    position: 'relative',
+    width: '100%',
+    height: 180,
+    borderRadius: 15,
+    overflow: 'hidden',
+    marginBottom: 20,
+    backgroundColor: '#0a0a0a',
+  },
+  posterPreview: {
+    width: '100%',
+    height: '100%',
+  },
+  posterPreviewOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  posterPreviewText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
   },
   inputGroup: {
     marginBottom: 20,

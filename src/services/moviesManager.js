@@ -31,6 +31,8 @@ export const MoviesManager = {
         year: movieData.year || '',
         genre: movieData.genre || '',
         platforms: movieData.platforms || [], // Array de plataformas
+        posterUrl: movieData.posterUrl || null, // URL do poster do TMDb
+        backdropUrl: movieData.backdropUrl || null, // URL do backdrop do TMDb
         status: 'pending', // pending, chosen, rejected
         addedAt: new Date().toISOString()
       };

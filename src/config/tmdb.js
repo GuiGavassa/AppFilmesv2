@@ -15,7 +15,7 @@
 // 💡 Veja mais detalhes em: TMDB_SETUP.md ou QUICK_START.md
 
 export const TMDB_CONFIG = {
-  API_KEY: 'SUA_API_KEY_AQUI', // ⬅️ Cole sua chave aqui!
+  API_KEY: 'ae01290eb2cf0f7cb7417770d605ca0e', // ⬅️ Cole sua chave aqui!
   BASE_URL: 'https://api.themoviedb.org/3',
   IMAGE_BASE_URL: 'https://image.tmdb.org/t/p',
   
