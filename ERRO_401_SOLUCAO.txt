@@ -1,0 +1,163 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║   ⚠️  API KEY NÃO CONFIGURADA - ERRO 401 (Unauthorized)                     ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Você está vendo o erro "HTTP error! status: 401" porque a API Key do TMDb
+ainda não foi configurada no projeto.
+
+═══════════════════════════════════════════════════════════════════════════════
+🔑 SOLUÇÃO RÁPIDA (5 minutos)
+═══════════════════════════════════════════════════════════════════════════════
+
+PASSO 1: Obter sua API Key
+──────────────────────────────────────────────────────────────────────────────
+
+1. Acesse: https://www.themoviedb.org/signup
+   └─ Crie uma conta gratuita (use seu email)
+
+2. Após fazer login, vá para: https://www.themoviedb.org/settings/api
+   └─ Ou clique no seu avatar → Settings → API
+
+3. Clique em "Request an API Key" (Solicitar chave de API)
+   └─ Escolha "Developer" (uso não comercial)
+
+4. Preencha o formulário:
+   ┌────────────────────────────────────────────────────────┐
+   │ Application Name:    Meu App de Filmes                 │
+   │ Application URL:     http://localhost                  │
+   │ Application Summary: App pessoal para gerenciar filmes │
+   └────────────────────────────────────────────────────────┘
+
+5. Aceite os termos e envie
+
+6. 🎉 Você receberá sua API Key imediatamente!
+   └─ Copie a "API Key (v3 auth)" que aparece
+
+
+PASSO 2: Configurar no projeto
+──────────────────────────────────────────────────────────────────────────────
+
+1. Abra o arquivo:  src/config/tmdb.js
+
+2. Encontre esta linha:
+   ┌────────────────────────────────────────────────────────┐
+   │ API_KEY: 'SUA_API_KEY_AQUI',  // ⬅️ Cole sua chave aqui!│
+   └────────────────────────────────────────────────────────┘
+
+3. Substitua 'SUA_API_KEY_AQUI' pela sua chave:
+   ┌────────────────────────────────────────────────────────┐
+   │ API_KEY: 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',           │
+   └────────────────────────────────────────────────────────┘
+   ⚠️ Mantenha as aspas simples!
+
+4. Salve o arquivo (Ctrl+S / Cmd+S)
+
+5. 🎊 Pronto! Recarregue o app e teste novamente
+
+
+PASSO 3: Testar
+──────────────────────────────────────────────────────────────────────────────
+
+1. No app, vá para a aba "Lista"
+2. Toque no botão "+" (adicionar filme)
+3. Digite "Matrix" no campo Título
+4. Aguarde 2 segundos
+5. ✨ Se configurou corretamente, verá resultados aparecerem!
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📝 EXEMPLO DE CONFIGURAÇÃO CORRETA
+═══════════════════════════════════════════════════════════════════════════════
+
+ANTES (❌ causa erro 401):
+─────────────────────────
+export const TMDB_CONFIG = {
+  API_KEY: 'SUA_API_KEY_AQUI',    ← ❌ Não está configurado
+  BASE_URL: 'https://api.themoviedb.org/3',
+  // ...
+};
+
+DEPOIS (✅ funcionando):
+────────────────────────
+export const TMDB_CONFIG = {
+  API_KEY: 'a1b2c3d4e5f6g7h8i9...',    ← ✅ Chave válida do TMDb
+  BASE_URL: 'https://api.themoviedb.org/3',
+  // ...
+};
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🔍 VERIFICAÇÃO RÁPIDA
+═══════════════════════════════════════════════════════════════════════════════
+
+Sua API Key está correta se:
+
+✅ Tem pelo menos 32 caracteres
+✅ Contém apenas letras e números
+✅ Não é 'SUA_API_KEY_AQUI'
+✅ Está dentro de aspas simples
+✅ Não tem espaços antes/depois
+
+Teste sua chave diretamente:
+https://api.themoviedb.org/3/search/movie?api_key=SUA_CHAVE&query=matrix
+                                                   ↑
+                                    Substitua pela sua chave
+
+
+═══════════════════════════════════════════════════════════════════════════════
+❓ PROBLEMAS COMUNS
+═══════════════════════════════════════════════════════════════════════════════
+
+Problema: Ainda dá erro 401 após configurar
+Solução: 
+  • Verifique se salvou o arquivo src/config/tmdb.js
+  • Recarregue o app completamente (feche e abra)
+  • Verifique se não copiou espaços extras
+  • Certifique-se que a chave está entre aspas
+
+Problema: "API Key inválida"
+Solução:
+  • Aguarde 5-10 minutos após criar (pode demorar um pouco)
+  • Gere uma nova chave se necessário
+  • Verifique se usou a "API Key (v3 auth)", não o "Access Token"
+
+Problema: Conta criada mas não vejo opção de API
+Solução:
+  • Confirme seu email primeiro
+  • Faça logout e login novamente
+  • Use um navegador desktop (não mobile)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📚 MAIS INFORMAÇÕES
+═══════════════════════════════════════════════════════════════════════════════
+
+QUICK_START.md     → Guia rápido de 3 passos
+TMDB_SETUP.md      → Instruções detalhadas completas
+TMDB_API_EXAMPLES.js → Exemplos de código
+
+
+═══════════════════════════════════════════════════════════════════════════════
+✨ APÓS CONFIGURAR
+═══════════════════════════════════════════════════════════════════════════════
+
+Você poderá:
+  🔍 Buscar filmes em tempo real ao digitar
+  🎬 Ver informações completas (sinopse, ano, gêneros)
+  🖼️  Ver posters dos filmes
+  ⭐ Ver avaliações
+  🌍 Tudo em português!
+
+Limite gratuito: 1 milhão de buscas/mês (mais que suficiente!)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Precisa de ajuda? 
+• Revise os arquivos .md na raiz do projeto
+• Teste sua chave no link acima
+• Verifique se seguiu todos os passos
+
+Boa sorte! 🍿
